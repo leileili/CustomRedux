@@ -18,11 +18,16 @@ cm.init(store);
 render(
   <Provider store={store}>
 	  <Router history={browserHistory }>	  	
-		<Route path='/CustomRedux/' component={App}>
+		<Route path='/' component={App}>
 			<IndexRoute component={Home} />
 			<Route path="home" component={Home}/>
 			<Route path="about" component={About}/>
 		</Route>
+			 <Route path="/CustomRedux/" component={App}>
+		      <IndexRoute component={Home}/>
+		      <Route path="home" component={Home}/>
+		      <Route path="about" component={About}/>
+		    </Route>
 	</Router>
   </Provider>,
   document.getElementById('root')
