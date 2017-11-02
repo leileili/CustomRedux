@@ -7,7 +7,7 @@
 <b>Problem 1:</b>	
 In Redux, store.subscribe provides a way to notify subscribers when the store/state is changed. And store subscribers are always get invoked when an action is dispatched no matter if the action has a matched reducer. The problem is the store subscriber can not tell if the invocation is relevant when there is no matched reducer since the state is not changed. So it is impossible to use store.dispatch as a publish/subscribe system for regular communication method.
   
-In my Redux project at work, I did need such a publish/subscribe system to acheive a flexible communication (Why? See details in my other article: <a href="https://github.com/leileili/independentComponentlize">Independ Componentlize Web Application</a>
+In my Redux project at work, I did need such a publish/subscribe system to acheive a flexible communication (Why? See details in my other article: <a href="https://github.com/leileili/independentComponentlize">Highly componentized web application</a>
   
 <b>Problem 2:</b>  
 The store.subscribe in Redux cause a lot of overhead. For example, say you have 1000 subcribers of Redux store. For any action, every single subscriber's handlef will be invoked and each of the handler has to call getState in order to determent if the invocation is for the subscriber. Most likely one out of 1000 detect the change and process what it want but the rest, 999 calls, are wasted.
