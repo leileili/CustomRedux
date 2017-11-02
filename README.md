@@ -1,4 +1,4 @@
-***How did I extend the Redux to support moreflexible communication among components***
+***How did I extend the Redux to support moreflexible communication among components***<br/><br/>
 **Live Demo:**
 
 <a href="http://coolshare.com/leili/CustomRedux/">Custom React Redux Demo</a>
