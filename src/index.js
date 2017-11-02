@@ -23,7 +23,7 @@ render(
 			<Route path="home" component={Home}/>
 			<Route path="about" component={About}/>
 		</Route>
-			 <Route path="/CustomRedux/" component={App}>
+			 <Route path="/leili/CustomRedux/" component={App}>
 		      <IndexRoute component={Home}/>
 		      <Route path="home" component={Home}/>
 		      <Route path="about" component={About}/>

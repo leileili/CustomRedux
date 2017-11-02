@@ -29,4 +29,4 @@ Here is the flow chart:
 
 **Live Demo:**
 
-<a href="https://leileili.github.io/Custom_React_Redux/">Custom React Redux Demo</a>
+<a href="http://coolshare.com/leili/CustomRedux/">Custom React Redux Demo</a>
