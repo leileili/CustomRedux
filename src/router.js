@@ -14,6 +14,11 @@ const router = (
       <Route path="home" component={Home}/>
       <Route path="about" component={About}/>
     </Route>
+      <Route path="/CustomRedux/" component={App}>
+      <IndexRoute component={Home}/>
+      <Route path="home" component={Home}/>
+      <Route path="about" component={About}/>
+    </Route>
   </Router>
 );
 
