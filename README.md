@@ -14,16 +14,16 @@ The store.subscribe in Redux cause a lot of overhead. For example, say you have 
 <b>Solution:</b>
 I used a customized publish/subscribe pattern to "extend" Redux store.subscribe to solve the problems:<br/><br/>
 
-1. I had plain javascript signleton called CommunicationManager where the publish and subscribe are taken care. The CommunicationManager can be accessed by any components with importing.<br/><br/>
+1. I had plain javascript singleton called CommunicationManager where the publish and subscribe are taken care. The CommunicationManager can be accessed by any components with importing.<br/>
    
-2. I added middleware to save the incomming action, currentAction, as a field of CommunicationManager. <br/><br/>
+2. I added a middleware to save the incomming action, currentAction, as a field of CommunicationManager. <br/>
 
 3. When the CommunicationManager is initialized it call store.subscribe(handler). The only thing the handler did was: <br/><br/> 
       CommunicationManager.publish(CommunicationManager.crrentAction)
   <br/><br/>
 
-4). In this way, No matter there is a matched reducer for a dispatching, the action will be forward to my custom publish/subscribe system where the action.type is as a key to the "topic" map to obtain the list of subscribers.<br/>
-So now we can use store.dispatch to update store or notify subscribers.
+4). In this way, No matter if there is a matched reducer for a dispatching or not, the action will be forward to my custom publish/subscribe system where the action.type is used as a key of the "topic" map to obtain the list of subscribers.<br/>
+So now we can use store.dispatch to update store and as a pub/sub system to acheive a flexible communication.
 <br/><br/>
 <b>Solution to Problem 1:</b>	
 Since we save the currentAction in our middleware and "inject" the currentAction to the subscriber handler so any subscriber will receive the currentAction as the first argument of the handler and the no relavent handlers will never be invoked by my CommunicationManager (never gave a chance for non-relavent handle to determent if the invocation is for them).
