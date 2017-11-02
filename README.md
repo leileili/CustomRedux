@@ -1,8 +1,10 @@
-***How to extend Redux with pub/sub in real system ?***
+***How did I extend the Redux to support moreflexible communication among components***
 
 <p>
 <b>Problem 1:</b>	
-In my Redux project at work, in many cases, I needed to notice one or many components to update their states without making changes to Redux store (I will show you the example below). I can not use the store.subscribe from Redux since in case the type of action does not match any reducer, no state is changed in store so when a store subscriber get invoked, it has no idea to determent if the invocation is for it. Using dispatching for any notification is over killed<br/><br/>
+In Redux, store.subscribe provides a way to notify subscribers when the store/state is changed. And store subscribers are always get invoked when an action is dispatched no matter if the action has a matched reducer. The problem is the store subscriber can not tell if the invocation is relevant when there is no matched reducer since the state is not changed. So it is impossible to use store.dispatch as a publish/subscribe system for regular communication method.
+  
+In my Redux project at work, I did need such a publish/subscribe system to acheive a flexible communication (Why? See details in my other article: <a href="https://github.com/leileili/independentComponentlize">Independ Componentlize Web Application</a>
   
 <b>Problem 2:</b>  
 The store.subscribe in Redux cause a lot of overhead. For example, say you have 1000 subcribers of Redux store. For any action, every single subscriber's handlef will be invoked and each of the handler has to call getState in order to determent if the invocation is for the subscriber. Most likely one out of 1000 detect the change and process what it want but the rest, 999 calls, are wasted.
