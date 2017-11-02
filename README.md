@@ -2,15 +2,33 @@
 
 <p>
 <b>Problem 1:</b>	
-In a web application systems where components need to communicate to each other,if we use React Redux , the standard approach is using Redux store subscription. The subscription will be sent to all the subscribers and in a real world web application, it might mean more than hundreds or thousands components will receive the notification and for each component it needs to use getState() to check if this call is for it, but in the fact maybe there is only one component need to be notified. In this case the universal subscription approach will be a concern issue for performance. 
+In my Redux project at work, in many cases, I needed to notice one or many components to update their states without making changes to Redux store (I will show you the example below). I can not use the store.subscribe from Redux since in case the type of action does not match any reducer, no state is changed in store so when a store subscriber get invoked, it has no idea to determent if the invocation is for it. Using dispatching for any notification is over killed<br/><br/>
+  
+<b>Problem 2:</b>  
+The store.subscribe in Redux cause a lot of overhead. For example, say you have 1000 subcribers of Redux store. For any action, every single subscriber's handlef will be invoked and each of the handler has to call getState in order to determent if the invocation is for the subscriber. Most likely one out of 1000 detect the change and process what it want but the rest, 999 calls, are wasted.
 
-<br/>
-<b>Problem 2:</b>
-When there's no existing reducer match the requested action type, what will the Redux do? The state won't be changed, and so no components will receive any notification. But what if you need to make some components changes based on another components changes without updating state?
 <br/>
 <br/>
 <b>Solution:</b>
-I'm using customized publish/subscribe other than Redux store subscription to solve the problems, it also uses containers and components pattern of react.
+I used a customized publish/subscribe pattern to "extend" Redux store.subscribe to solve the problems:<br/><br/>
+
+1. I had plain javascript signleton called CommunicationManager where the publish and subscribe are taken care. The CommunicationManager can be accessed by any components with importing.<br/><br/>
+   
+2. I added middleware to save the incomming action, currentAction, as a field of CommunicationManager. <br/><br/>
+
+3. When the CommunicationManager is initialized it call store.subscribe(handler). The only thing the handler did was: <br/><br/> 
+      CommunicationManager.publish(CommunicationManager.crrentAction)
+  <br/><br/>
+
+4). In this way, No matter there is a matched reducer for a dispatching, the action will be forward to my custom publish/subscribe system where the action.type is as a key to the "topic" map to obtain the list of subscribers.<br/>
+So now we can use store.dispatch to update store or notify subscribers.
+<br/><br/>
+<b>Solution to Problem 1:</b>	
+Since we save the currentAction in our middleware and "inject" the currentAction to the subscriber handler so any subscriber will receive the currentAction as the first argument of the handler and the no relavent handlers will never be invoked by my CommunicationManager (never gave a chance for non-relavent handle to determent if the invocation is for them).
+<br/></br>
+<b>Solution to Problem 2:</b>	
+Since there is only a single subscriber to the store so there is only a single scenario for each dispatching to reach the right handler instead of 1000 scenarios with 1000 getState calls.
+
 
 In a regular redux application, the store sends out subscription to all the subscribers, with empty parameter. That's why the subscribers won't know what the current state is after receiving notification from store. Each subscriber has to check the current state by using getState(). But in my project, since there are more than hundreds of components, I don't want to use such method, it is very inefficient. 
 
