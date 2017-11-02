@@ -1,4 +1,7 @@
 ***How did I extend the Redux to support moreflexible communication among components***
+**Live Demo:**
+
+<a href="http://coolshare.com/leili/CustomRedux/">Custom React Redux Demo</a>
 
 <p>
 <b>Problem 1:</b>	
@@ -11,7 +14,7 @@ The store.subscribe in Redux cause a lot of overhead. For example, say you have 
 
 <br/>
 <br/>
-<b>Solution:</b>
+<b>My approach:</b>
 I used a customized publish/subscribe pattern to "extend" Redux store.subscribe to solve the problems:<br/><br/>
 
 1. I had plain javascript singleton called CommunicationManager where the publish and subscribe are taken care. The CommunicationManager can be accessed by any components with importing.<br/>
@@ -22,7 +25,7 @@ I used a customized publish/subscribe pattern to "extend" Redux store.subscribe 
       CommunicationManager.publish(CommunicationManager.crrentAction)
   <br/><br/>
 
-4). In this way, No matter if there is a matched reducer for a dispatching or not, the action will be forward to my custom publish/subscribe system where the action.type is used as a key of the "topic" map to obtain the list of subscribers.<br/>
+4. In this way, No matter if there is a matched reducer for a dispatching or not, the action will be forward to my custom publish/subscribe system where the action.type is used as a key of the "topic" map to obtain the list of subscribers.<br/>
 So now we can use store.dispatch to update store and as a pub/sub system to acheive a flexible communication.
 <br/><br/>
 <b>Solution to Problem 1:</b>	
@@ -32,21 +35,8 @@ Since we save the currentAction in our middleware and "inject" the currentAction
 Since there is only a single subscriber to the store so there is only a single scenario for each dispatching to reach the right handler instead of 1000 scenarios with 1000 getState calls.
 
 
-In a regular redux application, the store sends out subscription to all the subscribers, with empty parameter. That's why the subscribers won't know what the current state is after receiving notification from store. Each subscriber has to check the current state by using getState(). But in my project, since there are more than hundreds of components, I don't want to use such method, it is very inefficient. 
-
-I have a center piece called CommunicationManager which has publish, subscribe and also has a single store.subscribe.
-I'm using a middleware to save the current action whenever there is a dispatch. So whenever the store send out subscribe, I pass the current action with it. In this way, the subscribers will know what current action is without using getState().
-The CommunicationManager uses map to sort the topics coming from subscribers and publishers.
-
-Also for the problem of having no match reducer for a specific action type, I don't create a new reducer for the job; instead of I'm using subscribe and publish pattern to take care of the request. And some of my components don't have redux connect, but they need to get notified by other components' dispatch, subscribe and publish work for them too.
-
-I put together a small demo to explain how it was done in my work project. 
-
 
 Here is the flow chart:
 ![Custom React Redux workflow](./Custom_React_Redux.png?raw=true "Custom React Redux workflow Picture")
 
 
-**Live Demo:**
-
-<a href="http://coolshare.com/leili/CustomRedux/">Custom React Redux Demo</a>
