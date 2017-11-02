@@ -1,0 +1,12 @@
+{"comparables":[
+
+	{"street": "3426 Laguna Ct","city":"Santa Clara","state":"CA","zipcode":"95051","lat":"37.356530","long":"-121.990025"},
+	
+
+	{"street": "886 Washington Blvd","city":"Fremont","state":"CA","zipcode":"94539","lat":"37.531716","long":"-121.931390"},
+
+    {"street": "1766 Briarwood Dr","city":"San Jose","state":"CA","zipcode":"95125","lat":"37.285365","long":"-121.908800"},
+    
+    {"street": "1222 El Camino Real","city":"Redwood City","state":"CA","zipcode":"94063","lat":"37.482245","long":"-122.230240"}
+    ]
+}
