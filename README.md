@@ -37,6 +37,6 @@ Since there is only a single subscriber to the store so there is only a single s
 
 
 Here is the flow chart:
-![Custom React Redux workflow](./src/Custom_React_Redux.png?raw=true "Custom React Redux workflow Picture")
+![Custom React Redux workflow](./Custom_React_Redux.png?raw=true "Custom React Redux workflow Picture")
 
 
