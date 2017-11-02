@@ -34,7 +34,10 @@ Since we save the currentAction in our middleware and "inject" the currentAction
 <b>Solution to Problem 2:</b>	
 Since there is only a single subscriber to the store so there is only a single scenario for each dispatching to reach the right handler instead of 1000 scenarios with 1000 getState calls.
 
-
+**About the demo**
+The demo show two cases:
+1. A dispatch does two things: update the "houseData" and the action is also received by a subscriber where the filter is enabled.
+2. A dispatched action has no matched reducer and delivered to a subscriber.
 
 Here is the flow chart:
 ![Custom React Redux workflow](./src/Custom_React_Redux.png?raw=true "Custom React Redux workflow Picture")
