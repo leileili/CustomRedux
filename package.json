@@ -19,7 +19,7 @@
     "googlemap",
     "webpack"
   ],
-  "author": "Mark Qian",
+  "author": "Lei Li",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.24.1",
